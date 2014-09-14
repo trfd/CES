@@ -25,38 +25,37 @@ CES uses CMake as build system and Boost, SWIG and Lua libraries need to be inst
 
 Run the following code:
 
-  #include <iostream>
+    #include <iostream>
+    #include "ces/CES.hpp"
+    #include "ces/LuaVM.hpp"
+    #include "ces/Interpreter.hpp"
 
-  #include "ces/CES.hpp"
-  #include "ces/LuaVM.hpp"
-  #include "ces/Interpreter.hpp"
-
-  int main(int argc,char* argv[])
-  {
-    ces::LuaVM vm;
-    ces::Parser parser;
-    ces::Interpreter inter;
+    int main(int argc,char* argv[])
+    {
+      ces::LuaVM vm;
+      ces::Parser parser;
+      ces::Interpreter inter;
+      
+      vm.open();
+      parser.parse("Hello@[for i=1,5 do]@ @i@,@[end]@ World");
+      inter.interpret(&vm, parser.ast(), std::cout);
+      vm.close();
     
-    vm.open();
-    parser.parse("Hello@[for i=1,5 do]@ @i@,@[end]@ World");
-    inter.interpret(&vm, parser.ast(), std::cout);
-    vm.close();
-    
-    return 0;
-  }
+      return 0;
+    }
   
 This should produce the following output:
 
-  Hello 1, 2, 3, 4, 5, World
+    Hello 1, 2, 3, 4, 5, World
   
 ## Details
 
 Let's see how does it work. 
 The following line open and close the Lua virtual machine. 
   
-  vm.open();
-  ...
-  vm.close();
+    vm.open();
+    ...
+    vm.close();
 
 LuaVM is necessary to run the embedded script writen in Lua.
 Then the `parser` parses (obviously) a chunk of CES Script:
