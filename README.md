@@ -95,8 +95,8 @@ CES produces Lua scripts equivalent for each CES code interpreted:
   
     CES.out("Hello")    // Hello
     for i=1,5 do        // @[for i=1,5 do]@
-        CES.out(i)        // @i@
-        CES.out(",")      // ,
+        CES.out(i)      // @i@
+        CES.out(",")    // ,
     end                 // @[end]@
     CES.out(" World")   //  World
 
