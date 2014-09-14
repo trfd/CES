@@ -18,7 +18,8 @@ CES is a simple library that parse template file with embedded Lua code and gene
 # Requirements
 
 CES uses *CMake* as build system
-*Boost*, *SWIG* and *Lua* libraries need to be installed.
+The libraries *Boost* and *Lua* need to be present to build CES.
+If you plan to extend or modify CES, you may need to install *SWIG*.
 
 # Getting Started
 
@@ -107,5 +108,22 @@ CES produces Lua scripts equivalent for each CES code interpreted:
     end                 // @[end]@
     CES.out(" World")   //  World
 
+# Binding Lua to C++
+
+To make the most of CES you will need to bind you data members and method from C++ to Lua. Thanks to bindings you will be able to retrieve data from C++ in your CES file.
+
+For example, if you are developping a RPG with procedural dungeons you may need to generate Level files (let say in XML). Your template CES file may looks like the following
+
+    <Dungeon id=@Dungeon.id@>
+    @[for i=0,table.getn(Dungeon.NPCs) do]@
+        <NPC type=@Dungeon.NPCS[i].type@>
+         ... 
+        </NPC>
+    @[end]@
+    </Dungeon>
+
+In this example we need to access to the class `Dungeon` and `NPC` data members. 
+Unfortunatly CES can not expose this data for you. The simplest way to do this is using *SWIG*. 
+Documentation about *SWIG* and *Lua* can be found [here](http://www.swig.org/Doc1.3/Lua.html)
 
 
