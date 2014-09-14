@@ -17,6 +17,7 @@ CES is a simple library that parse template file with embedded Lua code and gene
 
 # Example
 
+
 # Requirements
 
 CES uses CMake as build system and Boost, SWIG and Lua libraries need to be installed.
@@ -65,7 +66,9 @@ Then the `parser` parses (obviously) a chunk of CES Script:
 The details of the CES syntax are presented below.
 And finally the `interpreter` interprets the parser's AST (Abstract Syntax Tree), produces a Lua script, run this script using the Lua virtual machine `vm` and stream the output to `std::cout`.
 
-## CES Syntax
+# CES Syntax
+
+### Lua delimiters
 
 The syntax of CES is very simple. The goal is to mix Lua in anything thus there are delimiters to mark when Lua code is starting and when _anything_ is starting.
 
@@ -80,12 +83,18 @@ The equivalent for the previous example would be something like
     Lua(end)
     Anything("World")
 
+### Output delimiters
+
 So, what are the `@...@` ? 
-The character `@` alone is used to mark a block as _output_, it's the equivalent of `std::cout` for CES. The content of _output_ blocks is evaluated and redirected to CES output (can be whichever stream you like: cout, file, buffer, ...). To do this CES uses a custom method in Lua: `CES.out`:
+The character `@` alone is used to mark a block as _output_, it's the equivalent of `std::cout` for CES.
+The content of _output_ blocks is evaluated and redirected to CES output (can be whichever stream you like: cout, file, buffer, ...). 
+To do this CES uses a custom method in Lua: `CES.out`:
 
     @i@ = CES.out(i)
   
 In fact the _anything_ blocks are also redirected to the CES output using `CES.out` but not evaluated.
+
+### Result
 
 CES produces Lua scripts equivalent for each CES code interpreted:
   
