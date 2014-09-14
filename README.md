@@ -15,12 +15,10 @@ CES is a simple library that parse template file with embedded Lua code and gene
 * Expose your C++ to Lua (You can access to your datas/methods from embedded-Lua script)
 * Simple embedding syntax
 
-# Example
-
-
 # Requirements
 
-CES uses CMake as build system and Boost, SWIG and Lua libraries need to be installed.
+CES uses *CMake* as build system
+*Boost*, *SWIG* and *Lua* libraries need to be installed.
 
 # Getting Started
 
