@@ -123,7 +123,8 @@ For example, if you are developping a RPG with procedural dungeons you may need 
     </Dungeon>
 
 In this example we need to access to the class `Dungeon` and `NPC` data members. 
-Unfortunatly CES can not expose this data for you. The simplest way to do this is using *SWIG*. 
+
+Unfortunatly CES can not expose these datas for you. The simplest way to do this is using *SWIG*. 
 Documentation about *SWIG* and *Lua* can be found [here](http://www.swig.org/Doc1.3/Lua.html)
 
 
