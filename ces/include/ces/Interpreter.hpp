@@ -115,7 +115,8 @@ namespace ces
                 
                 currentBlock = static_cast<Block*>(currentBlock->parent);
                 indexes.pop_back();
-                ++indexes.back();
+                if(indexes.size() > 0)
+                    ++indexes.back();
             }
         }
         
