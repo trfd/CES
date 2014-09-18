@@ -3,15 +3,14 @@ install:
   - wget http://www.cmake.org/files/v3.0/cmake-3.0.2-Linux-i386.tar.gz
   - tar -xzvf cmake-3.0.2-Linux-i386.tar.gz
   - export CMAKE_ROOT=`pwd`/cmake-3.0.2-Linux-i386
-  - ls
-  - ls cmake-3.0.2-Linux-i386
-  - ls cmake-3.0.2-Linux-i386/bin
   - sudo apt-get update -qq
   - sudo apt-get install -y liblua5.1-0
   - sudo apt-get install -y libboost-all-dev
   - sudo apt-get install -y swig
   - sudo apt-get install -y libgtest-dev
-before_script: "mkdir cmake && cd cmake && $CMAKE_ROOT/bin/cmake .."
+before_script: 
+  - mkdir cmake && cd cmake
+  - $CMAKE_ROOT/bin/cmake ..
 script: "make"
 compiler:
   - clang
