@@ -1,11 +1,9 @@
 language: cpp
 install:
-  - wget http://www.cmake.org/files/v3.0/cmake-3.0.2-Linux-i386.tar.gz
-  - tar -xzvf cmake-3.0.2-Linux-i386.tar.gz
-  - export CMAKE=`pwd`/cmake-3.0.2-Linux-i386/bin/cmake
-  - chmod +x cmake-3.0.2-Linux-i386/bin/cmake
-  - cmake-3.0.2-Linux-i386/bin/cmake --version
-  - $CMAKE --version
+  - wget http://www.cmake.org/files/v3.0/cmake-3.0.2.tar.gz
+  - tar -xzvf cmake-3.0.2.tar.gz 
+  - cd cmake-3.0.2.tar.gz
+  - ./configure && make && make install
   - sudo apt-get update -qq
   - sudo apt-get install -y liblua5.1-0
   - sudo apt-get install -y libboost-all-dev
@@ -13,7 +11,7 @@ install:
   - sudo apt-get install -y libgtest-dev
 before_script: 
   - mkdir cmake && cd cmake
-  - $CMAKE ..
+  - cmake ..
 script: "make"
 compiler:
   - clang
