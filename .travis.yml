@@ -11,7 +11,8 @@ install:
 before_script: 
   - mkdir cmake && cd cmake
   - ls ..
-  - $CMAKE_ROOT
+  - ls $CMAKE_ROOT
+  - ls $CMAKE_ROOT/bin
   - $CMAKE_ROOT/bin/cmake ..
 script: "make"
 compiler:
