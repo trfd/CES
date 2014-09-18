@@ -15,8 +15,116 @@ CES is a simple library that parse template file with embedded Lua code and gene
 * Expose your C++ to Lua (You can access to your datas/methods from embedded-Lua script)
 * Simple embedding syntax
 
-# Example
+# Requirements
 
-
+CES uses *CMake* as build system
+The libraries *Boost* and *Lua* need to be present to build CES.
+If you plan to extend or modify CES, you may need to install *SWIG*.
 
 # Getting Started
+
+Run the following code:
+
+    #include <iostream>
+    #include "ces/CES.hpp"
+    #include "ces/LuaVM.hpp"
+    #include "ces/Interpreter.hpp"
+
+    int main(int argc,char* argv[])
+    {
+      ces::LuaVM vm;
+      ces::Parser parser;
+      ces::Interpreter inter;
+      
+      vm.open();
+      parser.parse("Hello@[for i=1,5 do]@ @i@,@[end]@ World");
+      inter.interpret(&vm, parser.ast(), std::cout);
+      vm.close();
+    
+      return 0;
+    }
+  
+This should produce the following output:
+
+    Hello 1, 2, 3, 4, 5, World
+  
+## Details
+
+Let's see how does it work. 
+The following line open and close the Lua virtual machine. 
+  
+    vm.open();
+    ...
+    vm.close();
+
+LuaVM is necessary to run the embedded script writen in Lua.
+Then the `parser` parses (obviously) a chunk of CES Script:
+
+    parser.parse("Hello@[for i=1,5 do]@ @i@,@[end]@ World");
+  
+The details of the CES syntax are presented below.
+And finally the `interpreter` interprets the parser's AST (Abstract Syntax Tree), produces a Lua script, run this script using the Lua virtual machine `vm` and stream the output to `std::cout`.
+
+# CES Syntax
+
+### Lua delimiters
+
+The syntax of CES is very simple. The goal is to mix Lua in anything thus there are delimiters to mark when Lua code is starting and when _anything_ is starting.
+
+    "Hello@[for i=1,5 do]@ @i@,@[end]@ World"
+
+Lua code is delimited using `@[` for starting a Lua block and `]@` for closing it.
+The equivalent for the previous example would be something like
+  
+    Anything("Hello")
+    Lua(for i=1,5 do) 
+    @i@ Anything(",") 
+    Lua(end)
+    Anything("World")
+
+### Output delimiters
+
+So, what are the `@...@` ? 
+The character `@` alone is used to mark a block as _output_, it's the equivalent of `std::cout` for CES.
+The content of _output_ blocks is evaluated and redirected to CES output (can be whichever stream you like: cout, file, buffer, ...). 
+To do this CES uses a custom method in Lua: `CES.out`:
+
+    @i@ = CES.out(i)
+  
+In fact the _anything_ blocks are also redirected to the CES output using `CES.out` but not evaluated.
+
+### Result
+
+CES produces Lua scripts equivalent for each CES code interpreted:
+  
+    "Hello@[for i=1,5 do]@ @i@,@[end]@ World"
+  
+    // Produces
+  
+    CES.out("Hello")    // Hello
+    for i=1,5 do        // @[for i=1,5 do]@
+        CES.out(i)      // @i@
+        CES.out(",")    // ,
+    end                 // @[end]@
+    CES.out(" World")   //  World
+
+# Binding Lua to C++
+
+To make the most of CES you will need to bind you data members and method from C++ to Lua. Thanks to bindings you will be able to retrieve data from C++ in your CES file.
+
+For example, if you are developping a RPG with procedural dungeons you may need to generate Level files (let say in XML). Your template CES file may looks like the following
+
+    <Dungeon id=@Dungeon.id@>
+    @[for i=0,table.getn(Dungeon.NPCs) do]@
+        <NPC type=@Dungeon.NPCS[i].type@>
+         ... 
+        </NPC>
+    @[end]@
+    </Dungeon>
+
+In this example we need to access to the class `Dungeon` and `NPC` data members. 
+
+Unfortunatly CES can not expose these datas for you. The simplest way to do this is using *SWIG*. 
+Documentation about *SWIG* and *Lua* can be found [here](http://www.swig.org/Doc1.3/Lua.html)
+
+
