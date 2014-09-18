@@ -1,3 +1,4 @@
+CMEXT_REQUIRE(CytokUtils_LIBRARIES       "CES requires CytokUtils_LIBRARIES")
 CMEXT_REQUIRE(Boost_FOUND       "CES requires Boost")
 CMEXT_REQUIRE(LUA_FOUND         "CES requires Lua")
 CMEXT_REQUIRE(SWIG_FOUND        "CES requires SWIG")
@@ -8,6 +9,7 @@ CMEXT_ADD_FILE_DIR(CES CES ces/include)
 CMEXT_ADD_FILE_DIR(CES CES ces/src)
 
 SET(CES_LINK_LIBS 
+	${CytokUtils_LIBRARIES}
 	${Boost_LIBRARIES}
 	${LUA_LIBRARIES}
 	)
