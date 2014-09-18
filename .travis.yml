@@ -1,0 +1,10 @@
+language: cpp
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libboost-all-dev
+  - sudo apt-get install -y swig
+before_script: "mkdir cmake && cd cmake && cmake .."
+script: "make"
+compiler:
+  - clang
+  - gcc
