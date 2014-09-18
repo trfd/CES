@@ -3,6 +3,7 @@ install:
   - wget http://www.cmake.org/files/v3.0/cmake-3.0.2-Linux-i386.tar.gz
   - tar -xzvf cmake-3.0.2-Linux-i386.tar.gz
   - export CMAKE=`pwd`/cmake-3.0.2-Linux-i386/bin/cmake
+  - chmod +x cmake-3.0.2-Linux-i386/bin/cmake
   - cmake-3.0.2-Linux-i386/bin/cmake --version
   - $CMAKE --version
   - sudo apt-get update -qq
