@@ -11,6 +11,8 @@ install:
   - sudo apt-get install -y libboost-all-dev
   - sudo apt-get install -y swig
   - sudo apt-get install -y libgtest-dev
+  - ls /usr/lib | grep gtest
+  - ls /usr/local/lib | grep gtest
   - cmake --version
 before_script: 
   - mkdir cmake && cd cmake
