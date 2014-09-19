@@ -10,7 +10,7 @@ install:
   - sudo apt-get install -y liblua5.1-0-dev
   - sudo apt-get install -y libboost-all-dev
   - sudo apt-get install -y swig
-  - sudo cmake_congif/install-gtest.sh
+  - sudo cmake_config/install-gtest.sh
   - cmake --version
 before_script: 
   - mkdir cmake && cd cmake
