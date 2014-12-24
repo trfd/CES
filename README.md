@@ -3,12 +3,18 @@ CES
 
 C++ Embedded Script - CES is used to write template file for code generation. 
 
-# Problem 
-Code generation tools are often needed in large projects, writing such tools is not complex but as the project grows and the generation needs evolve, mainting them becomes more and more tedious. 
+# Abstract
 
-The solution of embedding script code into _source_ code simplifies both reading and maintainability of template files.
-CES is a simple library that parse template file with embedded Lua code and generate files.
+During the conception of __STIG__, I was stuck on the general architecture of the code generator. 
+The goal was generating C++ code that contains informations about classes to create the static type introspection.
 
+The problem was « outsourcing » generation to allow frequent changes without re-compiling the tool each time. In addition the  source of generation should be clear.
+
+__CES__ is the answer to this problem. This is a simple template-engine that parse template file with embedded *Lua* code and generate files. 
+
+You can easily connect your code to the *Lua VM* and add your own variables, methods and classes that will exposed to your template files.
+
+Embedding script code into _source_ code simplifies both reading and maintainability of template files.
 # Features
 
 * Source-Language independant (CES doesn't parse the _source_ language, it can be whatever you want) 
